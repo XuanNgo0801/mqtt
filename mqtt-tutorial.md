@@ -16,8 +16,22 @@
   + QoS 2: Broker/client đảm bảo khi gửi dữ liệu thì phía nhận chỉ nhận được đúng một lần, quá trình này phải trải qua 4 bước bắt tay.
 # 3. Mô hình Pub/Sub
 - Thành phần 
-  - Client
-  + Publisher: Nơi gửi thông điệp
-  + Subscriber: Nơi nhận thông điệp
-  - Broker- Máy chủ
+  - Client: publish các message lên một/nhiều topic cụ thể hoặc subscribe một/nhiều topic nào đó để nhận message từ topic này.
+    + Publisher: Nơi gửi thông điệp
+    + Subscriber: Nơi nhận thông điệp
+  - Broker- Máy chủ: nhận thông điệp từ Publisher, xếp vào hàng đợi rồi chuyển đến một địa điểm cụ thể.  
+![image](https://user-images.githubusercontent.com/92737759/163503498-9ed8bbf2-577d-47f7-b38d-d43f66c1896d.png)  
+# 3. Cơ chế tổng quan
+![image](https://user-images.githubusercontent.com/92737759/163503693-701f67a4-b9a7-41d8-afc2-5f209fd4a1a4.png)  
+- MQTT hoạt động theo cơ chế client/server, nơi mà mỗi cảm biến là 1 client kết nối tới 1 server (MQTT broker), thông qua giao thức TCP
+- MQTT là giao thức định hướng bản tin. Mỗi bản tin được publish 1 địa chỉ cụ thể (Topic). Client subscribe vào một hoặc nhiều topic để nhận/gửi dữ liệu. Mỗi client sẽ nhận được dữ liệu khi bất kỳ 1 client nào khác gửi dữ liệu vào Topic đã đăng ký. Khi một client gửi một bản tin đến một kênh nào đó gọi là publish.
+# 4. Kiến trúc thành phần
+![image](https://user-images.githubusercontent.com/92737759/163504076-e24c4c40-456c-4a82-af71-89d585edb626.png)  
+- Thành phần chính của MQTT là Client (Publisher/Subscriber), Server (Broker), Sessions, Subscriptions và Topics.
+  + MQTT Client (Publisher/Subscriber): Clients sẽ subscribe một hoặc nhiều topics để gửi và nhận thông điệp từ những topic tương ứng.
+  + MQTT Server (Broker): Broker nhận những thông tin subscribe (Subscriptions) từ client, nhận thông điệp, chuyển những thông điệp đến các Subscriber tương ứng dựa trên Subscriptions từ client.
+  + Topic: Có thể coi Topic là một hàng đợi các thông điệp, và có sẵn khuôn mẫu dành cho Subscriber hoặc Publisher. Một cách logic thì các topic cho phép Client trao đổi thông tin với những ngữ nghĩa đã được định nghĩa sẵn. Ví dụ: Dữ liệu cảm biến nhiệt độ của một tòa nhà.
+  + Session: Một session được định nghĩa là kết nối từ client đến server. Tất cả các giao tiếp giữa client và server đều thông qua 1 session.
+  + Subscription: Không giống như session, subscription là kết nối từ client đến topic. Khi đã subscribe một topic, Client có thể nhận/gửi thông điệp với topic đó.
+
  
